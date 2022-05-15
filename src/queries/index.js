@@ -27,6 +27,17 @@ export const SubscriptionAllUlasan = gql `
   }
 `
 
+export const SubscriptionAllFoto = gql `
+  subscription MySubscription($where: mini_project_album_bool_exp!) {
+    mini_project_album(where: $where) {
+      img
+      id
+      id_museum
+      upload_date
+    }
+  }
+`
+
 export const getUser = gql `
   query MyQuery($where: mini_project_users_bool_exp = {}) {
     mini_project_users(where: $where) {

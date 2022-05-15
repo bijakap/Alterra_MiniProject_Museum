@@ -1,16 +1,20 @@
 import CustomInput from "../../Input";
 import InputImageSingle from "../../InputImage/single";
+import InputImageMultiple from "../../InputImage/multiple";
 import ListFoto from "../../Table/ListFoto";
-import { useState } from "react";
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMuseum, updateMuseum, addAlbumMuseum } from "../../../queries";
-import { useMutation, useQuery } from "@apollo/client";
+import { getMuseum, updateMuseum, SubscriptionAllFoto, addAlbumMuseum } from "../../../queries";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 
 const EditMuseum = () =>{
   const {id} = useParams()
   const [inputActive, setInputActive] = useState(false)
   const [active, setActive] = useState(0)
   const [errorMessage, setErrorMessage] = useState([])
+  const [errorMessageFoto, setErrorMessageFoto] = useState("")
   const [value, setValue] = useState({
     namaTempat : "",
     alamat : "",
@@ -19,8 +23,25 @@ const EditMuseum = () =>{
     deskripsi : "",
     thumbnail : "",
   })
+  const [inputsFoto, setinputsFoto] = useState([
+    {
+      filename : '',
+      imgBase64: ''
+    },
+  ]);
+  const [dataListFoto, setDataListFoto] = useState([])
   
+  const [ insertAlbumMuseum , {loading:albumLoading, error:albumError}] = useMutation(addAlbumMuseum, {
+    
+  })
 
+  const {data:dataFoto, loading:loadingFoto, error: errorFoto} = useSubscription(SubscriptionAllFoto, {
+    variables : {
+      "where" : {
+        "id_museum" : {"_eq" : id}
+      }
+    },
+  })
   const [ UpdateMuseum , {loading:loadingUpdate, error:errorUpdate}] = useMutation(updateMuseum)
   const {data, loading, error} = useQuery(getMuseum, {
     variables : {
@@ -28,7 +49,6 @@ const EditMuseum = () =>{
       "id": {"_eq": id}
     }},
     onCompleted : data => {
-      console.log(data.mini_project_museum[0])
       setValue({
         namaTempat : data.mini_project_museum[0].nama,
         alamat : data.mini_project_museum[0].alamat,
@@ -79,6 +99,30 @@ const EditMuseum = () =>{
       }})
     }
   }
+
+  const HandleSubmitAlbum = () => {
+    const Album = inputsFoto.map((data) => {
+      if(data.filename.length !== 0 || data.imgBase64.length !== 0){
+          return {
+            id_museum : id,
+            img : data.imgBase64
+          }
+      }
+    })
+    if (Album.includes(undefined)){
+      setErrorMessageFoto("Terdapat Input Field Yang Tidak Terisi")
+    } else {
+      insertAlbumMuseum({variables : {
+        objects: Album
+      }})
+    }
+  }
+
+  useEffect(() => {
+    if(loadingFoto === false){
+      setDataListFoto(dataFoto.mini_project_album)
+    }
+  }, [dataFoto])
   
 
   return(
@@ -138,10 +182,35 @@ const EditMuseum = () =>{
         </div>
         <div className={active === 1 ? "block" : "hidden"}>
           <div>
-            
+            {
+              dataListFoto.length < 1 ? 
+              <p className='text-[10px] text-gray-500'>Tidak Tersedia Foto</p> 
+              :
+              <ListFoto data={dataListFoto}/>
+            }
           </div>
-          <div>
-            <ListFoto data={[{img : "/favicon.ico", id : 1},{img : "/favicon.ico", id : 2}]}/>
+          <div className="my-4">
+          {
+            inputActive ? 
+            <div>
+              <button className='py-[10px] px-6 border-2 border-[#E0E0E0] rounded-lg gap-2 text-red-700 hover:bg-red-700 hover:border-white hover:text-white' onClick={() => setInputActive(false)}> <RemoveCircleOutlinedIcon/> Close</button>
+              <div className="py-3 my-2 border-y-2">
+                <InputImageMultiple label={"Foto"} id={"Multiple"} inputsFoto={inputsFoto} setinputsFoto={setinputsFoto}/>
+              </div>
+              <div className="flex justify-end">
+              <span className={ errorMessageFoto.length > 0 ? "text-sm text-red-600 font-normal leading-5 tracking-tight" : "hidden"}>{errorMessageFoto}</span>
+              {
+                albumLoading ? 
+                <span className="text-3xl animate-pulse">Loading...</span>
+                :
+                <button className="py-[10px] px-8 text-white bg-[#0B3B36] text-sm leading-5 tracking-[0.25px] font-medium rounded-lg" onClick={() => HandleSubmitAlbum()}>Simpan Dan Unggah</button>
+              }
+              </div>
+            </div>
+            :
+            <button className='py-[10px] px-6 border-2 border-[#E0E0E0] rounded-lg gap-2 text-[#116E1C] hover:bg-[#116E1C] hover:border-white hover:text-white' onClick={() => setInputActive(true)}> <AddCircleOutlineRoundedIcon/> Tambah</button>
+          }
+          
           </div>
         </div>
       </div>  
