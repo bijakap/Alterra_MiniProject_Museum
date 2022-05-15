@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar = ({active}) => {
   // const [ active, setActive ] = useState(0);
   const navigate = useNavigate()
-  console.log(active)
+  // console.log(active)
 
   return(
       <div className="w-[250px] h-auto bg-white shadow-md">

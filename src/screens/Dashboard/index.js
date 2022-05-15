@@ -8,7 +8,7 @@ const Dashboard = () => {
     <>
     <div className="flex bg-[#F6F7FB]">
       <Sidebar active={0}/>
-      <div className="w-full flex flex-col justify-between ">
+      <div className="w-full min-h-screen flex flex-col justify-between ">
         <div className="mx-10">
           <div className="flex justify-end">
             <Logout/>

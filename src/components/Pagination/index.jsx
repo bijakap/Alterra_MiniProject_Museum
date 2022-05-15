@@ -10,7 +10,7 @@ const Pagination = ({lengthData, index, setIndex}) => {
     <div className='flex'>
       
       {
-        index <= 1 ?  
+        index <= 1 || lengthData === 0?  
         <ArrowBackIosRoundedIcon className='self-center text-gray-300'/>
         : 
         <ArrowBackIosRoundedIcon className='self-center text-gray-500 cursor-pointer' onClick={() => {setIndex(index-1)}}/>
@@ -27,7 +27,7 @@ const Pagination = ({lengthData, index, setIndex}) => {
         </div>
       </div>
       {
-        index == length ? 
+        index == length || lengthData === 0? 
         <ArrowForwardIosRoundedIcon className='self-center text-gray-300'/>
         :
         <ArrowForwardIosRoundedIcon className='self-center text-gray-500 cursor-pointer' onClick={() => {setIndex(index+1)}}/>
