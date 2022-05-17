@@ -2,7 +2,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Sidebar = ({active}) => {
   // const [ active, setActive ] = useState(0);
@@ -12,7 +12,8 @@ const Sidebar = ({active}) => {
   return(
       <div className="w-[250px] h-auto bg-white shadow-md">
         <div className="flex justify-center mx-auto mt-6 mb-10">
-          <p className="font-bold text-[22px] leading-[26px]">YourLogo</p>
+
+          <Link to={"/"}><p className="font-bold text-[22px] leading-[26px] cursor-pointer">YourLogo</p></Link>
         </div>
         <div className='flex flex-col gap-2'>
           <div onClick={() => {navigate("/admin")}} className={`${active === 0 ? "bg-[#0A6C62] text-white py-2" : "bg-white text-[#8A92A6]"} mx-4 px-6 rounded-lg cursor-pointer`}>

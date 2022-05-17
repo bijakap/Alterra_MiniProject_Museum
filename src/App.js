@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from './screens/Dashboard';
 import Tambah from './screens/Dashboard/Tambah';
 import Edit from './screens/Dashboard/Edit';
-// import TestPage from './components/TestPage';
+import Homepage from './screens/Homepage';
+import DetailKonten from "./screens/DetailKonten";
+import Login from "./screens/Login";
+import Daftar from "./screens/Daftar";
 
 function App() {
-  let {id} = useParams()
   return (
     <div className="font-['Inter']">
       <Router>
         <Routes>
-          <Route path="/" element={<p>Home</p>}/>
+          <Route path="/" element={<Homepage/>}/>
           <Route path="/admin" element={<Dashboard/>}/>
           <Route path="/admin/tambah" element={<Tambah/>}/>
           <Route path="admin/edit/:id" element={<Edit/>}/>
-          <Route path="/IntroReact" element={<p>test aja</p>}/>
-          <Route path="*" element={<p>Halaman Gak ada Bro</p>}/>
+          <Route path='/page/:id' element={<DetailKonten/>}/>
+          <Route path='login' element={<Login/>}/>
+          <Route path="daftar" element={<Daftar/>}/>
+          <Route path="*" element={<div className="flex h-screen"><p className="m-auto">There's nothing here: 404!</p></div>}/>
         </Routes>
       </Router>
     </div>

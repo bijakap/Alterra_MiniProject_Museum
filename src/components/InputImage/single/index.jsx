@@ -17,7 +17,7 @@ const InputImageSingle = ({label, optional, id, value, setValue, name}) => {
   
   return(
     <div className="flex flex-col">
-      <label className="text-sm font-medium text-gray-700 tracking-wide mb-2">{label} <span className={optional ? "text-[#C4351A]" : "hidden"}>*</span></label>
+      <label className="text-sm font-medium text-gray-700 tracking-wide mb-2 text-left">{label} <span className={optional ? "text-[#C4351A]" : "hidden"}>*</span></label>
       <input type="file" className="hidden" id={id} onChange={(e) => {handleInput(e)}} accept="image/png, image/jpeg, image/jpg"/>
       <div className="flex gap-4">
         <button onClick={() => document.getElementById(id).click()} className="border border-[#D0D5DD] bg-[#F2F4F7] py-[6px] px-4 rounded-lg"><span>Upload File</span></button>
@@ -31,5 +31,9 @@ const InputImageSingle = ({label, optional, id, value, setValue, name}) => {
     </div>
   )
 }
+InputImageSingle.defaultProps = {
+  id : "gambar",
+  optional : false,
+};
 
 export default InputImageSingle;

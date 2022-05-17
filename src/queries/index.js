@@ -47,6 +47,20 @@ export const getUser = gql `
       password
       nama
       profile_pic
+      remember_me
+    }
+  }
+`
+
+export const updateRememberMe = gql `
+  mutation MyMutation($where: mini_project_users_bool_exp!, $_set: mini_project_users_set_input!) {
+    update_mini_project_users(where: $where, _set: $_set) {
+      returning {
+        id
+        nama
+        role
+        remember_me
+      }
     }
   }
 `
@@ -84,22 +98,35 @@ export const getAllMuseumAndUlasan = gql `
 `
 
 export const getMuseumAndUlasan = gql `
-  query MyQuery($museum: mini_project_museum_bool_exp!, $ulasan: mini_project_ulasan_bool_exp!) {
-    mini_project_museum(where: $museum) {
-      id
-      nama
-      deksripsi
-      alamat
-      gambar
-      jadwal
-      kontak
-    }
-    mini_project_ulasan(where: $ulasan) {
-      ulasan
-      img
-      date
-    }
+query MyQuery($museum: mini_project_museum_bool_exp!, $ulasan: mini_project_ulasan_bool_exp!, $album: mini_project_album_bool_exp!) {
+  mini_project_museum(where: $museum) {
+    id
+    nama
+    deksripsi
+    alamat
+    gambar
+    jadwal
+    kontak
   }
+  mini_project_ulasan(where: $ulasan, order_by: {id: asc}) {
+    ulasan
+    img
+    date
+    id_museum
+    id_user
+  }
+  mini_project_album(where: $album) {
+    id
+    id_museum
+    img
+    upload_date
+  }
+  mini_project_users(where: {role: {_eq: "pengguna"}}) {
+    nama
+    id
+    profile_pic
+  }
+}
 `
 
 export const addUlasan = gql `

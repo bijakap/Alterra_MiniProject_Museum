@@ -2,8 +2,18 @@ import Sidebar from "../../../components/Sidebar";
 import Logout from "../../../components/Section/Logout";
 import Footer from "../../../components/Footer";
 import EditMuseum from "../../../components/Section/EditMuseum";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Edit = () => {
+  const user = useSelector((state) => state.user)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(user.role !== "admin"){
+      navigate("/")
+    }
+  })
   return (
     <>
     <div className="flex bg-[#F6F7FB]">

@@ -19,6 +19,7 @@ const CustomInput = ({label, value, setValue, optional, placeholder, name, type,
   )
 }
 CustomInput.defaultProps = {
+  optional : true,
   type : "text",
   regex: "",
 };
