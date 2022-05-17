@@ -87,7 +87,7 @@ const Homepage = () => {
           <SedangPopuler data={dataOlahMusuem}/>
         </div>
       </div>
-      <Footer admin={false} textColor={"text-white"} bg={"bg-[#0B3B36]"}/>
+      <Footer role={false} textColor={"text-white"} bg={"bg-[#0B3B36]"}/>
     </div>
   )
 }

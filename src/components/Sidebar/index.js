@@ -13,7 +13,7 @@ const Sidebar = ({active}) => {
       <div className="w-[250px] h-auto bg-white shadow-md">
         <div className="flex justify-center mx-auto mt-6 mb-10">
 
-          <Link to={"/"}><p className="font-bold text-[22px] leading-[26px] cursor-pointer">YourLogo</p></Link>
+          <Link to={"/"}><p className="font-bold text-[22px] leading-[26px] cursor-pointer">Hi!Story</p></Link>
         </div>
         <div className='flex flex-col gap-2'>
           <div onClick={() => {navigate("/admin")}} className={`${active === 0 ? "bg-[#0A6C62] text-white py-2" : "bg-white text-[#8A92A6]"} mx-4 px-6 rounded-lg cursor-pointer`}>
