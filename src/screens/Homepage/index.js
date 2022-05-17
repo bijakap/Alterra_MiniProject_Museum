@@ -2,6 +2,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer"
 import SearchBarV2 from "../../components/SearchBar/v2";
 import SedangPopuler from "../../components/Section/SedangPopuler";
+import { Link } from "react-router-dom";
 import { SubscriptionAllMuseum, SubscriptionAllUlasan } from "../../queries";
 import { useSubscription } from "@apollo/client";
 import { useState, useEffect } from "react";
@@ -67,6 +68,7 @@ const Homepage = () => {
             <div className="absolute bg-white w-full">
             {
               dataSearch.map((data, dataIndex) => (
+              <Link to={"/page/" + data.id}>
               <div className="flex gap-4 border-y-2">
                 <img src={data.gambar} className="w-[125px] h-auto"/>
                 <div className="self-center">
@@ -74,6 +76,7 @@ const Homepage = () => {
                   <p className="text-[#09564E] font-light text-[20px] leading-5 overflow-hidden">{data.alamat}</p>
                 </div>
               </div>
+              </Link>
               ))
             }
               
