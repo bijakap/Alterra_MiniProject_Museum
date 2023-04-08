@@ -6,11 +6,11 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 
 const httpLink = new HttpLink({
-    uri: 'https://kampus-merdeka-2809.hasura.app/v1/graphql',
+    uri: process.env.REACT_APP_GRAPHQL_URL,
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-    url: 'wss://kampus-merdeka-2809.hasura.app/v1/graphql',
+    url:  process.env.REACT_APP_WEBSOCKET_GRAPHQL_URL,
 }));
 
 // The split function takes three parameters:
